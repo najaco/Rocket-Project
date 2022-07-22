@@ -34,13 +34,13 @@ var y;
 var vert = 0;
 var horiz = 0;
 const brown = new Color(164, 84, 30); // defines the color brown for program use.
-var skyColor;
+let skyColor = new Color(64, green, blue);
 const sand = new Color(238, 203, 173); // Peach Puff 2
 const msand = new Color(205, 175, 149); // Peach Puff 3
 const sun1 = new Color(255, 248, 220); // Cornsilk
 const house = new Color(245, 222, 129); // Seashell
 const Outerrings = new Color(205, 201, 201); // Snow 2
-const Wingcircle = new Color(105, 105, 105); // Dim Gray - circles on wings
+const Wingcircle = new Color(105, 105, 105); // Dim grey - circles on wings
 const MF = new Color(218, 224, 254);
 const BottomHouse = new Color(205, 133, 63);
 const LLight = new Color(LLightR, LLightG, LLightB); // Deep Sky Blue
@@ -51,11 +51,293 @@ const F3 = new Color(0, 0, 128);
 const Space = new Color(25, 25, 40);
 const Countdown = new Font("Times", Font.PLAIN, 30);
 const wh = new Font("Times", Font.PLAIN, 16);
-// AudioClip launch;
-// AudioClip lazerfire;
-// AudioClip explosion;
-// AudioClip SWTheme;
+const launch = new Audio("sounds/rocketLaunch.wav");
+const lazerfire = new Audio("sounds/blaster.wav");
+const explosion = new Audio("sounds/explosion.wav");
+const SWTheme = new Audio("sounds/swtheme.wav");
+const rocketFire = (F1, F2, F3, count, v, h, g, RFX) => {
+  if (count <= 3) {
+    g.setColor(F1);
+    g.fillArc(450 + RFX + h, 425 + v, 200, 200, 0, -180);
+    g.setColor(F2);
+    g.fillArc(475 + RFX + h, 450 + v, 150, 174, 0, -180);
+    g.setColor(F3);
+    g.fillArc(500 + RFX + h, 475 + v, 100, 140, 0, -180);
+  }
+};
 
+const paintDeathStarExplosion = (g) => {
+  for (let i = 0; i < 100; i++) {
+    const a = Math.random() * 500 + 25;
+    const b = Math.random() * 500 + 25;
+    g.drawLine(275, 275, a, b);
+  }
+};
+
+const paintExplosion = (g) => {
+  for (let i = 0; i < 100; i++) {
+    const a = Math.random() * 100 + 200;
+    const b = Math.random() * 100 + 100;
+    g.drawLine(250, 150, a, b);
+  }
+};
+
+const paintRocket = (g, frames) => {
+  if (frames > 1000 && chck == 475) {
+  } else {
+    rocketFire(F1, F2, F3, count, v, h, g, RFX);
+  }
+
+  if (frames > 1899 && frames < 3010) {
+    v--;
+    rocketFire(F1, F2, F3, count, v, h, g, RFX);
+  } else {
+  }
+  g.setColor(MF);
+  // left wing
+  const lwx = [520 + h, 451 + h, 540 + h, 540 + h];
+  const lwy = [340 + v, 480 + v, 480 + v, 340 + v];
+  g.fillPolygon(lwx, lwy, 4);
+  // right wing
+  const rwx = [560 + h, 560 + h, 650 + h, 580 + h];
+  const rwy = [340 + v, 480 + v, 480 + v, 340 + v];
+  g.fillPolygon(rwx, rwy, 4);
+  // g.fillRect(630,400,50,100);
+  // cockpit
+  const cpx = [630 + h, 645 + h, 660 + h, 675 + h, 675 + h, 650 + h, 630 + h];
+  const cpy = [420 + v, 400 + v, 400 + v, 420 + v, 480 + v, 500 + v, 500 + v];
+  g.fillPolygon(cpx, cpy, 7);
+  g.setColor(Color.black);
+  g.drawPolygon(cpx, cpy, 7);
+  // Window Pane background
+  const cpwx = [630 + h, 645 + h, 660 + h, 675 + h];
+  const cpwy = [420 + v, 400 + v, 400 + v, 420 + v];
+  g.fillPolygon(cpwx, cpwy, 4);
+  g.setColor(MF);
+  // left window of cockpit
+  const xlwin = [630 + h, 645 + h, 650 + h, 639 + h];
+  const ylwin = [420 + v, 400 + v, 400 + v, 420 + v];
+  g.fillPolygon(xlwin, ylwin, 4);
+  // middle window of cockpit
+  g.setColor(MF);
+  g.fillRect(645 + h, 401 + v, 5, 19);
+  g.fillRect(655 + h, 401 + v, 5, 19);
+  g.fillRect(650 + h, 400 + v, 5, 5);
+  // right window of cockpit
+  const xrwin = [655 + h, 666 + h, 675 + h, 660 + h];
+  const yrwin = [400 + v, 420 + v, 420 + v, 400 + v];
+  g.fillPolygon(xrwin, yrwin, 4);
+  // end of cockpit
+  g.setColor(Color.black);
+  g.drawLine(645 + h, 400 + v, 660 + h, 400 + v);
+  g.setColor(MF);
+  // draw left wing
+  g.setColor(MF);
+  g.fillOval(450 + h, 400 + v, 201, 201);
+  g.setColor(Color.black);
+  g.setColor(Color.black);
+  g.drawOval(450 + h, 400 + v, 201, 201);
+  g.setColor(MF);
+  g.fillRect(542 + h, 375 + v, 17, 50);
+  g.setColor(Color.black);
+  g.drawLine(542 + h, 375 + v, 542 + h, 400 + v);
+  g.drawLine(558 + h, 375 + v, 558 + h, 400 + v);
+  g.drawLine(542 + h, 375 + v, 558 + h, 375 + v);
+  g.drawLine(630 + h, 420 + v, 675 + h, 420 + v);
+
+  g.drawLine(520 + h, 340 + v, 470 + h, 440 + v);
+  g.drawLine(540 + h, 400 + v, 540 + h, 340 + v);
+  g.drawLine(520 + h, 340 + v, 540 + h, 340 + v);
+  // draw right wing
+  g.drawLine(580 + h, 340 + v, 630 + h, 440 + v);
+  g.drawLine(560 + h, 400 + v, 560 + h, 340 + v);
+  g.drawLine(560 + h, 340 + v, 580 + h, 340 + v);
+
+  // middle
+  g.setColor(skyColor);
+  g.drawOval(525 + h, 475 + v, 50, 50);
+  g.fillRect(450 + h, 495 + v, 201, 20);
+
+  g.setColor(MF);
+  const midx = [
+    450 + h,
+    440 + h,
+    440 + h,
+    450 + h,
+    650 + h,
+    660 + h,
+    660 + h,
+    650 + h,
+  ];
+  const midy = [
+    490 + v,
+    500 + v,
+    510 + v,
+    515 + v,
+    515 + v,
+    510 + v,
+    500 + v,
+    490 + v,
+  ];
+  g.fillPolygon(midx, midy, 8);
+  g.setColor(Color.black);
+  g.fillArc(435 + h, 497 + v, 10, 15, 90, -180);
+  g.fillArc(655 + h, 497 + v, 10, 15, 90, 180);
+  g.setColor(Color.black);
+  g.drawLine(450 + h, 490 + v, 440 + h, 500 + v);
+  g.drawLine(440 + h, 500 + v, 440 + h, 510 + v);
+  g.drawLine(440 + h, 510 + v, 450 + h, 515 + v);
+  g.drawLine(650 + h, 515 + v, 660 + h, 510 + v);
+  g.drawLine(660 + h, 510 + v, 660 + h, 500 + v);
+  g.drawLine(660 + h, 500 + v, 650 + h, 490 + v);
+  // Middle Circle
+  chck = 475 + v;
+  g.drawOval(525 + h, chck, 50, 50);
+  // upper-lower back black circles
+  g.fillOval(520 + h, 525 + v, 20, 20);
+  g.fillOval(540 + h, 530 + v, 20, 20);
+  g.fillOval(560 + h, 525 + v, 20, 20);
+  g.setColor(Outerrings);
+  g.drawOval(520 + h, 525 + v, 20, 20);
+  g.drawOval(540 + h, 530 + v, 20, 20);
+  g.drawOval(560 + h, 525 + v, 20, 20);
+  // lower-lower back black circles
+  g.setColor(Color.black);
+  g.fillOval(515 + h, 555 + v, 20, 20);
+  g.fillOval(540 + h, 560 + v, 20, 20);
+  g.fillOval(565 + h, 555 + v, 20, 20);
+  g.setColor(Outerrings);
+  g.drawOval(515 + h, 555 + v, 20, 20);
+  g.drawOval(540 + h, 560 + v, 20, 20);
+  g.drawOval(565 + h, 555 + v, 20, 20);
+  // between wings
+  g.setColor(Color.black);
+  g.drawLine(570 + h, 485 + v, 560 + h, 400 + v);
+  g.drawLine(530 + h, 485 + v, 540 + h, 400 + v);
+  // circles on wings
+  g.setColor(Outerrings);
+  g.fillOval(495 + h, 400 + v, 10, 10); // g.drawLine(540, 400, 540, 340);
+  g.fillOval(520 + h, 375 + v, 10, 10);
+  g.fillOval(597 + h, 400 + v, 10, 10); // 560
+  g.fillOval(570 + h, 375 + v, 10, 10);
+  // Cockpit Hallway
+  g.setColor(Color.black);
+  g.drawLine(630 + h, 440 + v, 575 + h, 490 + v);
+  g.drawLine(655 + h, 495 + v, 573 + h, 510 + v);
+  // Middle Turret
+  const xturretbot = [542 + h, 547 + h, 553 + h, 558 + h];
+  const yturretbot = [525 + v, 475 + v, 475 + v, 525 + v];
+  g.setColor(Color.black);
+  g.fillPolygon(xturretbot, yturretbot, 4);
+  g.setColor(Color.grey);
+  g.fillRect(540 + h, 490 + v, 20, 30);
+  g.fillRect(540 + h, 465 + v, 5, 50);
+  g.fillRect(555 + h, 465 + v, 5, 50);
+  g.setColor(Color.black);
+  g.drawRect(540 + h, 465 + v, 5, 50);
+  g.drawRect(555 + h, 465 + v, 5, 50);
+  g.setColor(Color.grey);
+  g.fillRect(540 + h, 490 + v, 20, 30);
+  g.setColor(Color.black);
+  g.drawRect(540 + h, 490 + v, 20, 30);
+
+  if (frames > 300) {
+    // 33 x 12 = 396 but 300 works better.
+    v--;
+  }
+
+  // code to play launch sound - ACTIVATE IN PHASE 3
+  if (frames == 0) {
+    launch.play();
+    // console.log("Attempting to play launch sound");
+    // launch.addEventListener("canplaythrough", event => {launch.play();})
+  }
+
+  // reset v for rocket entering second scene
+  if (frames == 1001) {
+    v = 300;
+  }
+  if (frames > 1001 && frames < 1200) {
+    v--;
+  }
+  if (frames > 1000 && chck == 475) {
+    v = 0;
+  }
+  if (frames > 1200 && frames < 1500) {
+    h--;
+  }
+
+  g.setColor(Color.red);
+  if (frames > 1550 && frames < 1725) {
+    lazer--;
+    lazer--;
+    g.fillRect(540 + h, 450 + v + lazer, 4, 20);
+  }
+  if (frames > 1583 && frames < 1758) {
+    lazer2--;
+    lazer2--;
+    g.fillRect(555 + h, 450 + v + lazer2, 4, 20);
+  }
+  if (frames > 1616 && frames < 1783) {
+    lazer3--;
+    lazer3--;
+    g.fillRect(540 + h, 450 + v + lazer3, 4, 20);
+  }
+  if (frames > 1649 && frames < 1809) {
+    lazer4--;
+    lazer4--;
+    g.fillRect(555 + h, 450 + v + lazer4, 4, 20);
+  }
+  if (frames == 1550) {
+    lazerfire.play();
+  } else if (frames == 1583) {
+    lazerfire.play();
+  } else if (frames == 1616) {
+    lazerfire.play();
+  } else if (frames == 1649) {
+    lazerfire.play();
+  }
+
+  // tie fighters
+  if (frames > 1001 && frames < 1809) {
+    g.setColor(Color.grey);
+    g.fillRect(142, 150, 210, 10);
+    g.setColor(Color.black);
+    g.drawRect(142, 150, 210, 10);
+    g.setColor(Color.grey);
+    g.fillOval(200, 100, 100, 100);
+    g.setColor(Color.black);
+    g.drawOval(200, 100, 100, 100);
+    g.fillRect(137, 75, 10, 150);
+    g.fillRect(350, 75, 10, 150);
+    g.fillOval(213, 114, 75, 75);
+    g.setColor(Color.grey);
+    // window lines
+    g.drawLine(213, 114, 286, 186);
+    g.drawLine(213, 186, 286, 114);
+    g.drawLine(250, 114, 250, 186);
+    g.drawLine(250, 114, 250, 186);
+    g.drawLine(213, 150, 286, 150);
+    g.setColor(Color.black);
+    g.fillOval(238, 140, 25, 25);
+    g.setColor(Color.grey);
+    g.drawOval(238, 140, 25, 25);
+  } else if (frames >= 1809 && frames < 1900) {
+    g.setColor(Color.yellow);
+    paintExplosion(g);
+    g.setColor(Color.orange);
+    paintExplosion(g);
+  }
+  if (frames == 1809) {
+    explosion.play();
+  }
+};
+const paintStar = (x, y, g) => {
+  g.setColor(Color.yellow);
+  const starx = [x, x + 1, x + 4, x + 1, x, x - 1, x - 4, x - 1];
+  const stary = [y, y + 3, y + 4, y + 5, y + 8, y + 5, y + 4, y + 3];
+  g.fillPolygon(starx, stary, 8);
+};
 const paintScene1 = (g, frames) => {
   // DO NOT WRITE ANY CODE BEFORE THIS! WE WILL ALWAYS PAINT THE SKY FIRST!
   // This code repaints the entire applet the Sky Color. DO NOT ERASE THIS CODE!
@@ -239,315 +521,17 @@ const paintScene1 = (g, frames) => {
     }
   }
   g.setColor(skyColor);
-  g.fillRect(400, 500, 5, LPBars);
-  g.fillRect(695, 500, 5, LPBars);
+  g.fillRect(395, 500, 10, LPBars);
+  g.fillRect(690, 500, 10, LPBars);
   g.setColor(Color.black);
   g.fillRect(400, 590, 300, 40);
   g.setColor(Color.orange);
   g.fillArc(400, 550, 300, 80, 0, -180);
   g.setColor(Color.black);
-  g.fillRect(400, 590, 5, LPOpening);
-  g.fillRect(695, 590, 5, LPOpening);
+  g.fillRect(400, 590, 5, Math.max(0, LPOpening));
+  g.fillRect(695, 590, 5, Math.max(0, LPOpening));
 }; // end of paintScene1 method
 
-const rocketFire = (F1, F2, F3, count, v, h, g, RFX) => {
-  if (count <= 3) {
-    g.setColor(F1);
-    g.fillArc(450 + RFX + h, 425 + v, 200, 200, 0, -180);
-    g.setColor(F2);
-    g.fillArc(475 + RFX + h, 450 + v, 150, 174, 0, -180);
-    g.setColor(F3);
-    g.fillArc(500 + RFX + h, 475 + v, 100, 140, 0, -180);
-  }
-};
-
-const paintExplosion = (g) => {
-  var counter = 0;
-  var a;
-  var b;
-  while (counter < 60) {
-    a = Math.random() * 100 + 200;
-    b = Math.random() * 100 + 100;
-    g.drawLine(250, 150, a, b);
-    counter++;
-  }
-};
-
-const paintRocket = (g, frames) => {
-  if (frames > 1000 && chck == 475) {
-  } else {
-    rocketFire(F1, F2, F3, count, v, h, g, RFX);
-  }
-
-  if (frames > 1899 && frames < 3010) {
-    v--;
-    rocketFire(F1, F2, F3, count, v, h, g, RFX);
-  } else {
-  }
-  g.setColor(MF);
-  // left wing
-  const lwx = [520 + h, 451 + h, 540 + h, 540 + h];
-  const lwy = [340 + v, 480 + v, 480 + v, 340 + v];
-  g.fillPolygon(lwx, lwy, 4);
-  // right wing
-  const rwx = [560 + h, 560 + h, 650 + h, 580 + h];
-  const rwy = [340 + v, 480 + v, 480 + v, 340 + v];
-  g.fillPolygon(rwx, rwy, 4);
-  // g.fillRect(630,400,50,100);
-  // cockpit
-  const cpx = [630 + h, 645 + h, 660 + h, 675 + h, 675 + h, 650 + h, 630 + h];
-  const cpy = [420 + v, 400 + v, 400 + v, 420 + v, 480 + v, 500 + v, 500 + v];
-  g.fillPolygon(cpx, cpy, 7);
-  g.setColor(Color.black);
-  g.drawPolygon(cpx, cpy, 7);
-  // Window Pane background
-  const cpwx = [630 + h, 645 + h, 660 + h, 675 + h];
-  const cpwy = [420 + v, 400 + v, 400 + v, 420 + v];
-  g.fillPolygon(cpwx, cpwy, 4);
-  g.setColor(MF);
-  // left window of cockpit
-  const xlwin = [630 + h, 645 + h, 650 + h, 639 + h];
-  const ylwin = [420 + v, 400 + v, 400 + v, 420 + v];
-  g.fillPolygon(xlwin, ylwin, 4);
-  // middle window of cockpit
-  g.setColor(MF);
-  g.fillRect(645 + h, 401 + v, 5, 19);
-  g.fillRect(655 + h, 401 + v, 5, 19);
-  g.fillRect(650 + h, 400 + v, 5, 5);
-  // right window of cockpit
-  const xrwin = [655 + h, 666 + h, 675 + h, 660 + h];
-  const yrwin = [400 + v, 420 + v, 420 + v, 400 + v];
-  g.fillPolygon(xrwin, yrwin, 4);
-  // end of cockpit
-  g.setColor(Color.black);
-  g.drawLine(645 + h, 400 + v, 660 + h, 400 + v);
-  g.setColor(MF);
-  // draw left wing
-  g.setColor(MF);
-  g.fillOval(450 + h, 400 + v, 201, 201);
-  g.setColor(Color.black);
-  g.setColor(Color.black);
-  g.drawOval(450 + h, 400 + v, 201, 201);
-  g.setColor(MF);
-  g.fillRect(542 + h, 375 + v, 17, 50);
-  g.setColor(Color.black);
-  g.drawLine(542 + h, 375 + v, 542 + h, 400 + v);
-  g.drawLine(558 + h, 375 + v, 558 + h, 400 + v);
-  g.drawLine(542 + h, 375 + v, 558 + h, 375 + v);
-  g.drawLine(630 + h, 420 + v, 675 + h, 420 + v);
-
-  g.drawLine(520 + h, 340 + v, 470 + h, 440 + v);
-  g.drawLine(540 + h, 400 + v, 540 + h, 340 + v);
-  g.drawLine(520 + h, 340 + v, 540 + h, 340 + v);
-  // draw right wing
-  g.drawLine(580 + h, 340 + v, 630 + h, 440 + v);
-  g.drawLine(560 + h, 400 + v, 560 + h, 340 + v);
-  g.drawLine(560 + h, 340 + v, 580 + h, 340 + v);
-
-  // middle
-  g.setColor(skyColor);
-  g.drawOval(525 + h, 475 + v, 50, 50);
-  g.fillRect(450 + h, 495 + v, 201, 20);
-
-  g.setColor(MF);
-  const midx = [
-    450 + h,
-    440 + h,
-    440 + h,
-    450 + h,
-    650 + h,
-    660 + h,
-    660 + h,
-    650 + h,
-  ];
-  const midy = [
-    490 + v,
-    500 + v,
-    510 + v,
-    515 + v,
-    515 + v,
-    510 + v,
-    500 + v,
-    490 + v,
-  ];
-  g.fillPolygon(midx, midy, 8);
-  g.setColor(Color.black);
-  g.fillArc(435 + h, 497 + v, 10, 15, 90, -180);
-  g.fillArc(655 + h, 497 + v, 10, 15, 90, 180);
-  g.setColor(Color.black);
-  g.drawLine(450 + h, 490 + v, 440 + h, 500 + v);
-  g.drawLine(440 + h, 500 + v, 440 + h, 510 + v);
-  g.drawLine(440 + h, 510 + v, 450 + h, 515 + v);
-  g.drawLine(650 + h, 515 + v, 660 + h, 510 + v);
-  g.drawLine(660 + h, 510 + v, 660 + h, 500 + v);
-  g.drawLine(660 + h, 500 + v, 650 + h, 490 + v);
-  // Middle Circle
-  chck = 475 + v;
-  g.drawOval(525 + h, chck, 50, 50);
-  // upper-lower back black circles
-  g.fillOval(520 + h, 525 + v, 20, 20);
-  g.fillOval(540 + h, 530 + v, 20, 20);
-  g.fillOval(560 + h, 525 + v, 20, 20);
-  g.setColor(Outerrings);
-  g.drawOval(520 + h, 525 + v, 20, 20);
-  g.drawOval(540 + h, 530 + v, 20, 20);
-  g.drawOval(560 + h, 525 + v, 20, 20);
-  // lower-lower back black circles
-  g.setColor(Color.black);
-  g.fillOval(515 + h, 555 + v, 20, 20);
-  g.fillOval(540 + h, 560 + v, 20, 20);
-  g.fillOval(565 + h, 555 + v, 20, 20);
-  g.setColor(Outerrings);
-  g.drawOval(515 + h, 555 + v, 20, 20);
-  g.drawOval(540 + h, 560 + v, 20, 20);
-  g.drawOval(565 + h, 555 + v, 20, 20);
-  // between wings
-  g.setColor(Color.black);
-  g.drawLine(570 + h, 485 + v, 560 + h, 400 + v);
-  g.drawLine(530 + h, 485 + v, 540 + h, 400 + v);
-  // circles on wings
-  g.setColor(Outerrings);
-  g.fillOval(495 + h, 400 + v, 10, 10); // g.drawLine(540, 400, 540, 340);
-  g.fillOval(520 + h, 375 + v, 10, 10);
-  g.fillOval(597 + h, 400 + v, 10, 10); // 560
-  g.fillOval(570 + h, 375 + v, 10, 10);
-  // Cockpit Hallway
-  g.setColor(Color.black);
-  g.drawLine(630 + h, 440 + v, 575 + h, 490 + v);
-  g.drawLine(655 + h, 495 + v, 573 + h, 510 + v);
-  // Middle Turret
-  const xturretbot = [542 + h, 547 + h, 553 + h, 558 + h];
-  const yturretbot = [525 + v, 475 + v, 475 + v, 525 + v];
-  g.setColor(Color.black);
-  g.fillPolygon(xturretbot, yturretbot, 4);
-  g.setColor(Color.gray);
-  g.fillRect(540 + h, 490 + v, 20, 30);
-  g.fillRect(540 + h, 465 + v, 5, 50);
-  g.fillRect(555 + h, 465 + v, 5, 50);
-  g.setColor(Color.black);
-  g.drawRect(540 + h, 465 + v, 5, 50);
-  g.drawRect(555 + h, 465 + v, 5, 50);
-  g.setColor(Color.gray);
-  g.fillRect(540 + h, 490 + v, 20, 30);
-  g.setColor(Color.black);
-  g.drawRect(540 + h, 490 + v, 20, 30);
-
-  // ***************************************************************************
-
-  // Phase 2 Coding: Painting the fire coming out of the rocket.
-  // We want 100 lines of fire coming out of the rocket.
-  // There should be 1/3 red, 1/3 orange, and 1/3 yellow.
-  // Write the code inside the deactivated if statement using a
-  // while loop. YOU WILL NOT ACTIVATE AND FINISH THE IF STATEMENT
-  // UNTIL THE FIRE IS DONE. SO WAIT UNTIL PHASE 3 FOR THIS!!!
-
-  // Place the loop inside this if statement and make the if statement
-  // execute if count is less than or equal to 3.
-  // if ()
-  // {
-  // Write the code for the rocket fire here
-
-  // } // end of if
-
-  // This code makes the rocket lift off after 12 seconds by varying
-  // the vertical position of the rocket by decrementing v. For this
-  // code to work you must build v into your code that paints the rocket.
-  // This code assumes that there are 30 frames/sec.
-  if (frames > 300) {
-    // 33 x 12 = 396 but 300 works better.
-    v--;
-  }
-
-  // code to play launch sound - ACTIVATE IN PHASE 3
-  if (frames == 0) {
-    // launch.play();
-  }
-
-  // reset v for rocket entering second scene
-  if (frames == 1001) {
-    v = 300;
-  }
-  if (frames > 1001 && frames < 1200) {
-    v--;
-  }
-  if (frames > 1000 && chck == 475) {
-    v = 0;
-  }
-  if (frames > 1200 && frames < 1500) {
-    h--;
-  }
-
-  g.setColor(Color.red);
-  if (frames > 1550 && frames < 1725) {
-    lazer--;
-    lazer--;
-    g.fillRect(540 + h, 450 + v + lazer, 4, 20);
-  }
-  if (frames > 1583 && frames < 1758) {
-    lazer2--;
-    lazer2--;
-    g.fillRect(555 + h, 450 + v + lazer2, 4, 20);
-  }
-  if (frames > 1616 && frames < 1783) {
-    lazer3--;
-    lazer3--;
-    g.fillRect(540 + h, 450 + v + lazer3, 4, 20);
-  }
-  if (frames > 1649 && frames < 1809) {
-    lazer4--;
-    lazer4--;
-    g.fillRect(555 + h, 450 + v + lazer4, 4, 20);
-  }
-  if (frames == 1550) {
-    // lazerfire.play();
-  } else if (frames == 1583) {
-    // lazerfire.play();
-  } else if (frames == 1616) {
-    // lazerfire.play();
-  } else if (frames == 1649) {
-    // lazerfire.play();
-  }
-
-  // tie fighters
-  if (frames > 1001 && frames < 1809) {
-    g.setColor(Color.gray);
-    g.fillRect(142, 150, 210, 10);
-    g.setColor(Color.black);
-    g.drawRect(142, 150, 210, 10);
-    g.setColor(Color.gray);
-    g.fillOval(200, 100, 100, 100);
-    g.setColor(Color.black);
-    g.drawOval(200, 100, 100, 100);
-    g.fillRect(137, 75, 10, 150);
-    g.fillRect(350, 75, 10, 150);
-    g.fillOval(213, 114, 75, 75);
-    g.setColor(Color.gray);
-    // window lines
-    g.drawLine(213, 114, 286, 186);
-    g.drawLine(213, 186, 286, 114);
-    g.drawLine(250, 114, 250, 186);
-    g.drawLine(250, 114, 250, 186);
-    g.drawLine(213, 150, 286, 150);
-    g.setColor(Color.black);
-    g.fillOval(238, 140, 25, 25);
-    g.setColor(Color.gray);
-    g.drawOval(238, 140, 25, 25);
-  } else if (frames >= 1809 && frames < 1900) {
-    g.setColor(Color.yellow);
-    paintExplosion(g);
-    g.setColor(Color.orange);
-    paintExplosion(g);
-  }
-  if (frames == 1809) {
-    // explosion.play();
-  }
-};
-const paintStar = (x, y, g) => {
-  g.setColor(Color.yellow);
-  const starx = [x, x + 1, x + 4, x + 1, x, x - 1, x - 4, x - 1];
-  const stary = [y, y + 3, y + 4, y + 5, y + 8, y + 5, y + 4, y + 3];
-  g.fillPolygon(starx, stary, 8);
-};
 const paintScene2 = (g, frames) => {
   g.setColor(Space);
   g.fillRect(0, 0, 950, 650);
@@ -571,8 +555,94 @@ const paintScene2 = (g, frames) => {
     col++;
   }
 };
-const paintScene3 = (g, frames) => {};
-const paintScene4 = (g, frames) => {};
+const paintScene3 = (g, frames) => {
+  const o = 2350;
+  g.setColor(Space);
+  g.fillRect(0, 0, 950, 650);
+  y = 0;
+  var col = 0;
+  while (col < 22) {
+    var row = 0;
+    if (col % 2 == 0) {
+      x = -5;
+    } else {
+      x = -5;
+    }
+    while (row < 4) {
+      paintStar(x, y, g);
+      x = Math.random() * 950;
+      row++;
+    }
+    y += 30;
+    col++;
+  }
+  // small Melinium Falcon
+  g.setColor(MF);
+  g.fillRect(200 + horiz, 660 + vert, 20, 20);
+  if (frames < 401 + o) {
+    g.fillRect(210 + horiz, 650 + vert, 10, 20);
+  }
+  if (frames > 401 + o) {
+    g.fillRect(210 + horiz, 660 + vert, 20, 10);
+  }
+
+  if (frames > 0 + o && frames < 400 + o) {
+    vert--;
+  }
+  if (frames == 401 + o) {
+    lazerfire.play();
+  }
+  if (frames > 400 + o && frames < 1000 + o) {
+    horiz++;
+    horiz++;
+  }
+
+  // draw DeathStar
+  if (frames < 550 + o) {
+    g.setColor(Color.grey);
+    g.fillOval(50, 50, 500, 500);
+    g.setColor(Color.black);
+    g.drawOval(300, 150, 125, 125);
+    g.fillOval(350, 200, 25, 25);
+    g.drawOval(325, 175, 75, 75);
+    g.drawLine(362, 150, 362, 275);
+    g.drawLine(300, 212, 425, 212);
+    g.setColor(Space);
+    g.fillRect(300, 350, 250, 201);
+    g.setColor(Color.grey);
+    g.fillRect(300, 362, 225, 13);
+    g.setColor(Space);
+    g.fillArc(515, 350, 50, 50, 0, 360);
+    g.setColor(Color.grey);
+    g.fillRect(300, 390, 180, 20);
+    g.fillRect(300, 440, 210, 7);
+    g.fillRect(300, 540, 210, 7);
+    g.fillRect(300, 470, 190, 7);
+    g.fillRect(300, 490, 120, 10);
+    g.fillRect(300, 510, 140, 14);
+  } else {
+  }
+
+  if (frames > 500 + o && frames < 700 + o) {
+    g.setColor(Color.red);
+    paintDeathStarExplosion(g);
+    g.setColor(Color.orange);
+    paintDeathStarExplosion(g);
+    g.setColor(Color.yellow);
+    paintDeathStarExplosion(g);
+  } else {
+  }
+  if (frames == 500 + o) {
+    explosion.play();
+  }
+  if (frames == 600 + o) {
+    SWTheme.play();
+  }
+};
+const paintScene4 = (g, frames) => {
+  g.setColor(Color.black);
+  g.fillRect(0, 0, 950, 650);
+};
 
 function drawAnimation(g, frames) {
   // console.log(`Frame = ${frames}`)
