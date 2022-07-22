@@ -527,9 +527,6 @@ const paintScene1 = (g, frames) => {
   g.fillRect(400, 590, 300, 40);
   g.setColor(Color.orange);
   g.fillArc(400, 550, 300, 80, 0, -180);
-  g.setColor(Color.black);
-  g.fillRect(400, 590, 5, Math.max(0, LPOpening));
-  g.fillRect(695, 590, 5, Math.max(0, LPOpening));
 }; // end of paintScene1 method
 
 const paintScene2 = (g, frames) => {
