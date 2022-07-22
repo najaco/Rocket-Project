@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head> </head>
+  <body>
+    <h1>Rocket Project in Cavas</h1>
+    <canvas width="950" height="1000">
+      An alternative text describing what your canvas displays.
+    </canvas>
+    <script type="text/javascript" src="graphics.js"></script>
+    <script type="text/javascript" src="animation.js"></script>
+    <script>
+      const canvas = document.querySelector("canvas");
+      const ctx = canvas.getContext("2d");
+      ctx.fillStyle = "green";
+      var frameCount = 600;
+      var g = new Graphics(ctx, 950, 950);
+      var timer = setInterval(function () {
+        // console.log(`Frame count = ${frameCount}`);
+        g.clear();
+        frameCount++;
+        drawAnimation(g, frameCount);
+      }, 1000 / 60);
+    </script>
+  </body>
+</html>
