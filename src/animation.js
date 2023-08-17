@@ -247,9 +247,7 @@ const generateAnimationDrawer = () => {
 
     // code to play launch sound - ACTIVATE IN PHASE 3
     if (frames == 0) {
-      launch.play();
-      // console.log("Attempting to play launch sound");
-      // launch.addEventListener("canplaythrough", event => {launch.play();})
+      launch.play().catch((e) => console.error(e));
     }
 
     // reset v for rocket entering second scene
@@ -288,13 +286,13 @@ const generateAnimationDrawer = () => {
       g.fillRect(555 + h, 450 + v + lazer4, 4, 20);
     }
     if (frames == 1550) {
-      lazerFire.play();
+      lazerFire.play().catch((e) => console.error(e));
     } else if (frames == 1583) {
-      lazerFire.play();
+      lazerFire.play().catch((e) => console.error(e));
     } else if (frames == 1616) {
-      lazerFire.play();
+      lazerFire.play().catch((e) => console.error(e));
     } else if (frames == 1649) {
-      lazerFire.play();
+      lazerFire.play().catch((e) => console.error(e));
     }
 
     // tie fighters
@@ -328,7 +326,7 @@ const generateAnimationDrawer = () => {
       paintExplosion(g);
     }
     if (frames == 1809) {
-      explosion.play();
+      explosion.play().catch((e) => console.error(e));
     }
   };
   const paintStar = (x, y, g) => {
@@ -555,7 +553,7 @@ const generateAnimationDrawer = () => {
       vert--;
     }
     if (frames == 401 + o) {
-      lazerFire.play();
+      lazerFire.play().catch((e) => console.error(e));
     }
     if (frames > 400 + o && frames < 1000 + o) {
       horiz++;
@@ -598,10 +596,10 @@ const generateAnimationDrawer = () => {
     } else {
     }
     if (frames == 500 + o) {
-      explosion.play();
+      explosion.play().catch((e) => console.error(e));
     }
     if (frames == 600 + o) {
-      SWTheme.play();
+      SWTheme.play().catch((e) => console.error(e));
     }
   };
   const paintScene4 = (g, frames) => {
