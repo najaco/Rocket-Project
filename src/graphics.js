@@ -26,15 +26,14 @@ class Color {
 
 class Font {
   constructor(name, type, size) {
-    this.fontName = name;
-    this.fontType = type;
+    this.name = name;
+    this.type = type;
     this.size = size;
   }
 
   to_font_str() {
-    return `${this.name} ${this.type} ${this.size}px`;
+    return `${this.type} ${this.size}px ${this.name} `;
   }
-  static PLAIN = "plain";
 }
 class Graphics {
   constructor(ctx, height, width) {

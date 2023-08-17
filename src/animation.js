@@ -48,8 +48,7 @@ const generateAnimationDrawer = () => {
   const F2 = new Color(30, 144, 255);
   const F3 = new Color(0, 0, 128);
   const Space = new Color(25, 25, 40);
-  const Countdown = new Font("Times", Font.PLAIN, 30);
-  const wh = new Font("Times", Font.PLAIN, 16);
+  const Countdown = new Font("times", "bold", 28);
   const launch = new Audio("sounds/rocketLaunch.wav");
   const lazerFire = new Audio("sounds/blaster.wav");
   const explosion = new Audio("sounds/explosion.wav");
@@ -452,7 +451,7 @@ const generateAnimationDrawer = () => {
     g.setColor(Color.white);
     g.fillRect(215, 350, 80, 50);
     g.setColor(Color.black);
-    g.fillRect(225, 363, 60, 25);
+    g.fillRect(225, 360, 60, 30);
     let counter = "";
     g.setColor(Color.red);
     g.setFont(Countdown);
@@ -461,7 +460,8 @@ const generateAnimationDrawer = () => {
     } else if (count == -1) {
       counter = "0";
     }
-    g.drawString(counter, 250, 385);
+
+    g.drawString(counter, 250 - (count == 10 ? 10 : 0), 385);
 
     // Launch Arm Ropes
     if (count <= 10 && count > 7) {
