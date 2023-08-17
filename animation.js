@@ -346,12 +346,6 @@ const paintScene1 = (g, frames) => {
   g.setColor(skyColor);
   g.fillRect(0, 0, 950, 650);
 
-  // Write an if statement with a compound boolean expression that will animate
-  // the sun by incrementing sunH and sunV if the value of frames is greater
-  // than 90 and less than 1000. Also, inside this if statement, write the code
-  // for another if statement that decrements the values of the variables green
-  // and blue if the value of green is greater than 64 and frames contains an
-  // even value.
   if (frames > 90 && frames < 1000) {
     sunH++;
     sunV++;
@@ -372,8 +366,7 @@ const paintScene1 = (g, frames) => {
   }
   // paint the sun
   g.setColor(sun1);
-  // We will modify this line to animate the sun and you can change the location
-  // a little if you need to later.
+
   g.fillOval(sunH + 500, sunV + 100, 100, 100);
   g.setColor(Color.pink);
   g.fillOval(sunHb + 300, sunVb + 120, 100, 100);
@@ -451,30 +444,6 @@ const paintScene1 = (g, frames) => {
   }
   g.fillRect(255, 270, 10, 5);
 
-  // paint the control tower
-
-  // Paint the count-down clock
-
-  // ***************************************************************************
-
-  // SKIP THE FOLLOWING INSTRUCTION UNTIL YOU ARE CODING PHASE 3.
-  // Paint the animated numbers on the count-down clock.
-  // When count is greater than or equal to zero, do the following:
-  // define myFont2 to be ("Times", Font.PLAIN, 36) by constructing
-  // this font. Then, set the drawing font to myFont2. Set the
-  // drawing color to red. Then, use an if-else statement in this
-  // if statement to call drawString and paint the number on the
-  // count-down clock. If the value in the variable count is 10,
-  // paint the number 10 in the correct position on the clock.
-  // If the value in the variable count is 0 - 9, then paint the
-  // correct number at a slightly different position on the clock.
-  // This is because it takes more space to paint a 10 than a
-  // single digit number.
-
-  // Write an if statement that will decrement count by one ONLY WHEN
-  // THE FOLLOWING IS TRUE ... when (frames + 61) is evenly divisible by 30
-  // and when count is greater than 0.
-  //
   if ((frames + 61) % 30 == 0) {
     if (count <= 10 && count > -1) {
       count--;
