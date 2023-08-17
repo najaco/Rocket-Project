@@ -7,8 +7,8 @@
     <canvas width="950" height="650">
       An alternative text describing what your canvas displays.
     </canvas>
-    <!-- <br /> -->
-    <!-- <button id="resetButton">Reset</button> -->
+    <br />
+    <button id="resetButton">Reset</button>
 
     <script type="text/javascript" src="graphics.js"></script>
     <script type="text/javascript" src="animation.js"></script>
@@ -17,14 +17,17 @@
       const ctx = canvas.getContext("2d");
       let frameCount = 0;
       let g = new Graphics(ctx, 950, 650);
+      let animation = generateAnimationDrawer();
 
-      // document.getElementById("resetButton").addEventListener("click", () => {
-      //   frameCount = 0;
-      // });
+      document.getElementById("resetButton").addEventListener("click", () => {
+        animation.pauseAllSound();
+        animation = generateAnimationDrawer();
+        frameCount = 0;
+      });
 
       var timer = setInterval(function () {
         g.clear();
-        drawAnimation(g, frameCount);
+        animation.drawAnimation(g, frameCount);
         frameCount++;
       }, 1000 / 30);
     </script>
