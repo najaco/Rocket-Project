@@ -2,7 +2,8 @@
 <html>
   <head> </head>
   <body>
-    <h1>Rocket Project in Cavas</h1>
+    <h1>Rocket Project in HTML5</h1>
+    <p>HTML5 canvas conversion of rocket project</p>
     <canvas width="950" height="1000">
       An alternative text describing what your canvas displays.
     </canvas>
@@ -12,14 +13,13 @@
       const canvas = document.querySelector("canvas");
       const ctx = canvas.getContext("2d");
       ctx.fillStyle = "green";
-      var frameCount = 600;
+      var frameCount = 0;
       var g = new Graphics(ctx, 950, 950);
       var timer = setInterval(function () {
-        // console.log(`Frame count = ${frameCount}`);
         g.clear();
-        frameCount++;
         drawAnimation(g, frameCount);
-      }, 1000 / 60);
+        frameCount++;
+      }, 1000 / 30);
     </script>
   </body>
 </html>
