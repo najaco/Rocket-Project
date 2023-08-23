@@ -108,7 +108,7 @@ class Graphics {
       0,
       startAngle * (Math.PI / 180),
       endAngle * (Math.PI / 180),
-      ccw
+      ccw,
     );
     if (fill) {
       this.ctx.fill();
@@ -132,7 +132,7 @@ class Graphics {
       x + width,
       y + height,
       x + width - radius.br,
-      y + height
+      y + height,
     );
     this.ctx.lineTo(x + radius.bl, y + height);
     this.ctx.quadraticCurveTo(x, y + height, x, y + height - radius.bl);
