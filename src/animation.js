@@ -49,10 +49,10 @@ const generateAnimationDrawer = () => {
   const F3 = new Color(0, 0, 128);
   const Space = new Color(25, 25, 40);
   const Countdown = new Font("times", "bold", 28);
-  const launch = new Audio("sounds/rocketLaunch.wav");
-  const lazerFire = new Audio("sounds/blaster.wav");
-  const explosion = new Audio("sounds/explosion.wav");
-  const SWTheme = new Audio("sounds/swtheme.wav");
+  const launch = new Audio("assets/rocketLaunch.wav");
+  const lazerFire = new Audio("assets/blaster.wav");
+  const explosion = new Audio("assets/explosion.wav");
+  const SWTheme = new Audio("assets/swtheme.wav");
   const rocketFire = (F1, F2, F3, count, v, h, g, RFX) => {
     if (count <= 3) {
       g.setColor(F1);
